@@ -46,12 +46,16 @@ function buyProduct() {
           var queryStr = `UPDATE products SET stock_qty = ${res[0].stock_qty - qty.amount} WHERE id = ${id.purchaseID}`;
           var itemBought = res[0].product_name;
           var totalPice = qty.amount * res[0].price;
+          var currentSales = res[0].product_sales;
           connection.query(queryStr, function(err, res) {
             console.log(`You bought ${qty.amount} ${itemBought} for a total of $${totalPice}!`);
-            connection.end(function(err) {
-              if (err) {
-                console.log(err);
-              };
+            var salesUpdate = `UPDATE products SET product_sales = ${currentSales + totalPice} WHERE id = ${id.purchaseID}`;
+            connection.query(salesUpdate, function(err, res) {
+              connection.end(function(err) {
+                if (err) {
+                  console.log(err);
+                };
+              });
             });
           });
         } else {
