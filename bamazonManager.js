@@ -85,7 +85,10 @@ function addInv() {
         name: 'amount',
         message: 'How much inventory would you like to add?'
       }]).then(function(qty) {
-        var queryStr = `UPDATE products SET stock_qty = ${res[0].stock_qty + qty.amount} WHERE id = ${id.add}`;
+        var currentStock = parseFloat(res[0].stock_qty);
+        var amtAdded = parseFloat(qty.amount);
+
+        var queryStr = `UPDATE products SET stock_qty = ${currentStock + amtAdded} WHERE id = ${id.add}`;
         var itemAdded = res[0].product_name;
         connection.query(queryStr, function(err, res) {
           console.log(`You added ${qty.amount} to the ${itemAdded} inventory.`);
@@ -127,8 +130,7 @@ function addProduct() {
           var newProductQty = qty.productQty;
 
           var queryStr = `INSERT INTO products(product_name, department_name, price, stock_qty)
-          VALUES("${newProductName}", '${newProductDept}', ${newProductPrice}, ${newProductQty});`
-
+          VALUES("${newProductName}", "${newProductDept}", ${newProductPrice}, ${newProductQty});`;
           connection.query(queryStr, function(err, res) {
             console.log(`ADDED PRODUCT TO STORE`);
             connection.end(function(err) {

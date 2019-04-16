@@ -6,7 +6,7 @@ USE bamazon;
 
 CREATE TABLE products (
 id INT AUTO_INCREMENT not null,
-product_name VARCHAR(40) not null,
+product_name VARCHAR(40),
 department_name VARCHAR(25),
 price DECIMAL(10,2),
 stock_qty INTEGER(8),
@@ -49,7 +49,19 @@ VALUES("Adrog's Immolating Breastplate", 'Armor', 775.75, 7, 0);
 
 CREATE TABLE departments (
 dept_id INT AUTO_INCREMENT not null,
-department_name VARCHAR(40) not null,
+department_name VARCHAR(25),
 over_head_costs DECIMAL(10,2),
 PRIMARY KEY (dept_id)
 );
+
+INSERT INTO departments(department_name, over_head_costs)
+VALUES("Weapon", 2500);
+
+INSERT INTO departments(department_name, over_head_costs)
+VALUES("Armor", 2000);
+
+INSERT INTO departments(department_name, over_head_costs)
+VALUES("Consumable", 1000);
+
+INSERT INTO departments(department_name, over_head_costs)
+VALUES("Item", 1500);
